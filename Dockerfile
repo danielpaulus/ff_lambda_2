@@ -45,7 +45,13 @@ WORKDIR ${FUNCTION_DIR}
 COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
 
 # Remove Firefox
-RUN rm -R /home/pwuser/.cache/ms-playwright/firefox-*
+# RUN rm -R /home/pwuser/.cache/ms-playwright/firefox-*
+#RUN curl -O https://ftp.mozilla.org/pub/firefox/releases/66.0/linux-x86_64/en-US/firefox-66.0.tar.bz2
+#RUN tar -xjvf firefox-66.0.tar.bz2
+#RUN sed -i 's/\/dev\/shm/\/tmp\/shm/g' /ms-playwright/firefox-1271/firefox/libxul.so
+RUN mkdir /tmp/shm
+#ENV MOZ_FORCE_DISABLE_E10S=1
+#RUN npm install -g geckodriver
 
 # Add Lambda Runtime Interface Emulator and use a script in the ENTRYPOINT for simpler local runs
 ADD https://github.com/aws/aws-lambda-runtime-interface-emulator/releases/latest/download/aws-lambda-rie /usr/local/bin/aws-lambda-rie
